@@ -16,7 +16,11 @@
  a different way), remove this and load the fonts there instead — just make
  sure alex brush, inter, playfair display, and poppins are all loaded
  somewhere. */
-
+/* Reset della scheda: ForumFree e la skin del forum danno ai div "margin: 0 auto" e ai messaggi il loro testo; qui la scheda torna com'e stata disegnata */
+.cs-wrap { margin: 0 auto; font: 16px/normal serif; text-align: start; color: #000; letter-spacing: normal; word-spacing: normal; hyphens: manual; list-style-type: disc; }
+.cs-wrap, .cs-wrap * { overflow-wrap: normal; }
+.cs-wrap :where(div) { margin: 0; }
+.cs-wrap :where(ul) { list-style-type: disc; }
 
 .cs-wrap {--pinklight: #4A90E2;
  --pinkdark: #2563EB;
