@@ -1,0 +1,1565 @@
+/*============================================================
+ paste everything in this tag into your css field, and
+ the markup inside <body> below into your html field.
+ no transform, no container queries, no aspect-ratio property,
+ no js. every position/width/height that defines the LAYOUT is
+ a plain percentage, which the browser always resolves against
+ whatever box it's actually sitting in — so this can't get the
+ "wrong width" the way the scaling versions did. Font sizes,
+ corner rounding, shadows and gaps use clamp() with vw as a
+ best-effort approximation, since those genuinely can't be
+ fluid without js or container queries — visually very close,
+ just not mathematically exact at every width.============================================================ */
+
+/* This @import replaces the <link> tag that was in the page <head>. If your
+ forum has a separate spot for font imports(or already loads google fonts
+ a different way), remove this and load the fonts there instead — just make
+ sure alex brush, inter, playfair display, and poppins are all loaded
+ somewhere. */
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Inter:wght@100; 200; 300; 400; 500; 600; 700; 800; 900&family=playfair+display:ital, wght@0, 400; 0, 500; 0, 600; 0, 700; 0, 800; 0, 900; 1, 400; 1, 500; 1, 600; 1, 700; 1, 800; 1, 900&family=poppins:ital, wght@0, 100; 0, 200; 0, 300; 0, 400; 0, 500; 0, 600; 0, 700; 0, 800; 0, 900; 1, 100; 1, 200; 1, 300; 1, 400; 1, 500; 1, 600; 1, 700; 1, 800; 1, 900&display=swap');
+
+.cs-wrap {--pinklight: #4A90E2;
+ --pinkdark: #2563EB;
+ --orangelight: #3B82F6;
+ --orangedark: #1D4ED8;
+
+ --backlight: #E2E8F0;
+ --backdark: #CBD5E1;
+ --invertlight: #0F172A;
+ --invertdark: #1E293B;
+
+ --render: url(https://upload.forumfree.net/i/fc10580768/2a5c8f18-03bf-49d3-b304-adcee04005ad.png);
+ --flower: url(https://i.ibb.co/Sxqt9mP/original.png);
+ --flower2: url(https://i.ibb.co/w4fSfys/Flower-Power-Tower2.png);
+ --polka: url(https://i.ibb.co/cyh4DBp/Polka3.png);
+
+ --title: poppins, sans-serif;
+ --text: inter, sans-serif;
+ --serif: playfair display, serif;
+ --script: alex brush, serif;
+
+ width: 100%;
+ max-width: 760px; /* mobile-safe default, matches the forum's general limit */
+ margin: 0 auto;
+ border-radius: 16px;
+ overflow: hidden;
+ box-shadow: 0 0 25px rgba(0, 0, 0, 0.25)}
+.cs-wrap * {box-sizing: border-box}
+
+/* Desktop exception: your forum allows character sheets to go up to 760px
+ wide on desktop specifically, even though the general limit is 700px.
+ 1024px is a standard "this is a desktop browser, not a phone/tablet"
+ breakpoint — if your forum's own desktop/mobile switch happens at a
+ different width, tell me and i'll match it exactly instead. */
+@media(min-width: 1024px) {.cs-wrap {width: 760px}}
+
+/* the aspect box: height: 0 + padding-top:% is the classic, universally
+ supported way to lock a box to a ratio(1950 / 1200= 162.5%) without
+ the css aspect-ratio property */
+.cs-aspect {position: relative;
+ width: 100%;
+ height: 0;
+ padding-top: 162.5%;
+ overflow: hidden;
+ background-color: var(--invertlight)}
+.cs-canvas {position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%}
+
+.molecules-flecks {position: absolute;
+ top: 0; left: 0;
+ height: 100%;
+ width: 100%;
+ background-image: url(https://i.ibb.co/DtvtrbQ/stardust-2-XDark.png);
+ mix-blend-mode: lighten}
+.molecules {position: relative;
+ width: 100%;
+ height: 100%;
+ mix-blend-mode: lighten;
+ overflow: hidden}
+
+/* ---------- Banner(38.4615% of total height= 750/1950) ---------- */
+.molecules-banner {background-color: var(--orangedark);
+ background-image: radial-gradient(circle at top left,
+ var(--pinkdark),
+ transparent 75%),
+ radial-gradient(circle at bottom right, var(--pinkdark), transparent 35%);
+ height: 38.4615%;
+ position: relative;
+ background-blend-mode: soft-light}
+.molecules-render {position: absolute;
+ z-index: 5;
+ /* top: -3.3333%; */
+ right: -10%;
+ width: 70%;
+ height: 100%;
+ margin-bottom: 2px}
+.molecules-render div {background-image: var(--render);
+ width: 100%;
+ height: 100%;
+ background-repeat: no-repeat;
+ background-size: cover;
+ background-position: top right}
+.molecules-banner-circle {height: 93.3333%;
+ width: 58.3333%;
+ position: absolute;
+ top: 13.3333%;
+ right: -16.6667%;
+ background: radial-gradient(circle at bottom right,
+ var(--orangelight, #3B82F6),
+ var(--pinklight));
+ border-radius: 100%;
+ overflow: hidden}
+.molecules-banner-circle div {font: italic clamp(14px, 4.1667vw, 31px) var(--script);
+ color: var(--invertlight);
+ text-transform: lowercase;
+ line-height: 0.8;
+ opacity: 0.25;
+ mix-blend-mode: overlay;
+ margin-left: -7.1429%}
+.molecules-banner-flower {position: absolute;
+ z-index: 1;
+ top: 2.6667%;
+ right: 12.5%;
+ height: 100%;
+ width: 50%;
+ mask-image: var(--flower);
+ mask-repeat: no-repeat;
+ mask-size: 100% 100%;
+ -webkit-mask-image: var(--flower);
+ -webkit-mask-repeat: no-repeat;
+ -webkit-mask-size: 100% 100%}
+.molecules-banner-flower div {height: 100%;
+ width: 100%;
+ background-color: #000}
+.molecules-pulse {position: absolute;
+ top: 0; left: 0;
+ height: 100%;
+ width: 100%;
+ mask-image: var(--polka);
+ -webkit-mask-image: var(--polka);
+ mix-blend-mode: hard-light;
+ overflow: hidden}
+.molecules-pulse div {height: 93.3333%;
+ width: 58.3333%;
+ background-color: var(--pinklight);
+ border-radius: 100%;
+ position: absolute;
+ top: 8.3333%;
+ right: -16.6667%;
+ filter: blur(1.5%);
+ animation: infinite pulse 5s}
+@keyframes pulse {0% {transform: scale(1)}
+ 35% {opacity: 1}
+ 100% {transform: scale(4); opacity: 0}}
+.molecules-title {position: absolute;
+ z-index: 9;
+ top: 6.6667%;
+ right: 43.2%;
+ font: 700 italic clamp(26px, 13.75vw, 104px) var(--script);
+ line-height: 0.85;
+ white-space: nowrap;
+ color: var(--invertlight);
+ -webkit-text-stroke: 3px var(--backlight);
+ paint-order: stroke fill;
+ display: flex;
+ flex-direction: column;
+ align-items: flex-start}
+.molecules-title div {-webkit-text-stroke: 0 transparent;
+ font: 800 clamp(9px, 1.6667vw, 12px) var(--title);
+ line-height: 1.15;
+ text-align: left;
+ text-transform: uppercase;
+ letter-spacing: 0;
+ background-color: var(--orangedark);
+ background-image: radial-gradient(circle at top left,
+ var(--pinkdark),
+ transparent 75%);
+ background-blend-mode: soft-light;
+ padding: clamp(8px, 1.6667vw, 12px);
+ padding-bottom: clamp(10px, 2.0833vw, 15px);
+ border-radius: clamp(4px, 0.8333vw, 6px);
+ color: var(--backlight);
+ position: relative}
+.molecules-title div::before {content: "\2726\2726\2726\2726\2726";
+ position: absolute;
+ letter-spacing: 6px;
+ width: calc(100% - 20px);
+ text-align: center;
+ top: 65%;
+ color: var(--orangelight, #3B82F6);
+ font-size: clamp(11px, 3.75vw, 28px);
+ text-shadow: var(--backlight) 2px 0 0,
+ var(--backlight) 1px 0 0,
+ var(--backlight) 1px 1px 0,
+ var(--backlight) 0 1px 0,
+ var(--backlight) -0px 1px 0,
+ var(--backlight) -1px 1px 0,
+ var(--backlight) -1px 0 0,
+ var(--backlight) -1px -0px 0,
+ var(--backlight) -1px -1px 0,
+ var(--backlight) -0px -1px 0,
+ var(--backlight) 0 -1px 0,
+ var(--backlight) 1px -1px 0,
+ var(--backlight) 1px -0px 0}
+.molecules-banner-right {background-color: var(--backlight);
+ height: 160%;
+ width: 100%;
+ border-radius: 0% 100% 100% 0%;
+ position: absolute;
+ top: -13.3333%;
+ right: 47.0833%;
+ box-shadow: 0 0 clamp(30px, 8.3333vw, 63px) rgba(40, 40, 40, 0.15)}
+.molecules-banner-right-1 {position: absolute;
+ top: 33.3333%;
+ right: 15%;
+ width: 30%;
+ display: grid;
+ grid-template-columns: repeat(2, minmax(0, 1fr));
+ text-align: left;
+ font: clamp(9px, 1.0417vw, 13px) var(--text);
+ color: var(--invertlight) !important;
+ line-height: 1.0;
+ letter-spacing: 0;
+ gap: 10px}
+.molecules-banner-right-1 div {font-size: inherit !important;
+ color: inherit !important;
+ border-bottom: dotted 2px var(--orangelight, #3B82F6);
+ padding-bottom: 7.5758%;
+ margin-bottom: 7.5758%;
+ min-width: 0;
+ overflow-wrap: break-word;
+ word-break: break-word}
+.molecules-banner-right-1 div:nth-child(7),
+.molecules-banner-right-1 div:nth-child(8) {border-bottom: none;
+ margin-bottom: 0;
+ padding-bottom: 0}
+/* The original design nudged these two items with large negative margins(-60px / -20px) as a one-off alignment fix for its fixed 1200px layout.
+ that hack doesn't translate safely to a percentage-based fluid grid with
+ shrinkable columns, so it's dropped here rather than converted. */
+.molecules-banner-right-1 b {display: block;
+ text-transform: uppercase;
+ font: 800 clamp(10px, 1.25vw, 13px) var(--text);
+ line-height: 1.2;
+ background: linear-gradient(to right, var(--pinklight), var(--orangedark));
+ background-clip: text;
+ -webkit-background-clip: text;
+ color: transparent;
+ margin-bottom: 4px}
+.molecules-quote {position: absolute;
+ z-index: 9;
+ left: 2.0833%;
+ bottom: -12%;
+ background: linear-gradient(225deg, var(--pinkdark), var(--orangelight, #3B82F6));
+ border-radius: clamp(8px, 1.6667vw, 12px) clamp(8px, 1.6667vw, 12px) 0 clamp(8px, 1.6667vw, 12px);
+ padding: clamp(14px, 3.3333vw, 25px) clamp(14px, 3.3333vw, 25px) clamp(18px, 4.1667vw, 31px) clamp(14px, 3.3333vw, 25px);
+ width: 42%;
+ display: flex;
+ flex-direction: column;
+ gap: clamp(8px, 1.6667vw, 12px);
+ align-items: center;
+ text-align: left;
+ font: 800 clamp(11px, 1.8333vw, 13px) var(--serif);
+ color: var(--backlight);
+ line-height: 1.35;
+ letter-spacing: 0;
+ text-shadow: 1px 1px 0 rgba(40, 40, 40, 0.15);
+ border: solid clamp(4px, 0.8333vw, 6px) var(--backdark);
+ border-bottom: none}
+.molecules-quote div {background-color: #000;
+ font: 800 clamp(7px, 0.8333vw, 8px) var(--text);
+ text-transform: uppercase;
+ line-height: 1.2;
+ letter-spacing: 2px;
+ color: #FFF;
+ mix-blend-mode: multiply;
+ align-self: flex-start;
+ padding: 2.4691%;
+ border-radius: clamp(3px, 0.4167vw, 3px);
+ position: absolute;
+ bottom: 0;
+ left: 0}
+.molecules-quote::before {position: absolute;
+ content: "";
+ display: block;
+ background-image: var(--flower2);
+ height: 100%;
+ width: 100%;
+ left: 0;
+ top: 0;
+ background-position: center;
+ mix-blend-mode: overlay;
+ opacity: 0.2;
+ border-radius: 10px}
+
+/* ---------- Mid(61.5385% of total height= 1200/1950) ---------- */
+.molecules-mid {background-color: var(--backdark);
+ height: 61.5385%;
+ position: relative;
+ z-index: 1}
+.molecules-mid-1 {position: relative;
+ z-index: 9;
+ margin-top: -100%;
+ height: 61.5385%}
+/* icon grid removed */
+
+.molecules-circ-2 {height: 45.8333%;
+ width: 45.8333%;
+ border-radius: 100%;
+ background: linear-gradient(to bottom left, var(--pinklight), var(--orangedark));
+ position: absolute;
+ z-index: 1;
+ top: 11.25%;
+ right: -5.4167%;
+ mix-blend-mode: color-burn;
+ overflow: hidden;
+ opacity: 0.4;
+ pointer-events: none}
+.molecules-circ-2.wow {background: linear-gradient(to top left, var(--pinklight), var(--orangedark));
+ right: auto;
+ left: -14.5833%;
+ top: auto;
+ bottom: 2%}
+.molecules-circ-2::before {position: absolute;
+ height: 100%;
+ width: 100%;
+ background-image: var(--polka);
+ display: block;
+ content: "";
+ filter: invert(100%)}
+.molecules-circ-2 div {mask-image: var(--flower2);
+ mask-repeat: no-repeat;
+ -webkit-mask-image: var(--flower2);
+ -webkit-mask-repeat: no-repeat;
+ height: 100%;
+ width: 100%;
+ mask-position: left bottom;
+ -webkit-mask-position: left bottom}
+.molecules-circ-2 div::before {content: "";
+ display: block;
+ height: 100%;
+ width: 100%;
+ background-color: var(--backdark)}
+
+.molecules-stats-title {/* top: 2.50%; */
+ height: 6.75%;
+ position: absolute;
+ display: flex;
+ align-items: center;
+ font: 900 italic 56px var(--serif);
+ overflow: hidden;
+ text-transform: uppercase;
+ letter-spacing: -1px;
+ text-align: left;
+ white-space: nowrap;
+ left: 44.1667%;
+ right: 0;
+ color: var(--invertlight)}
+.molecules-stats-title div {font-size: inherit;
+ color: inherit;
+ margin-right: -2.0833%}
+.molecules-stats-flower {position: absolute;
+ height: calc(100% + 10.8333%);
+ top: -10.8333%;
+ right: 45.8333%;
+ width: 41.6667%;
+ mask-image: var(--flower);
+ mask-repeat: no-repeat;
+ mask-size: 100% 100%;
+ -webkit-mask-image: var(--flower);
+ -webkit-mask-repeat: no-repeat;
+ -webkit-mask-size: 100% 100%;
+ mix-blend-mode: color-dodge}
+.molecules-stats-flower::before {content: "";
+ display: block;
+ height: 100%;
+ width: 100%;
+ background: linear-gradient(to top, var(--orangedark), var(--pinklight) 85%)}
+.molecules-stats {padding: clamp(12px, 5.4167vw, 15px);
+ background-color: var(--backlight);
+ box-shadow: 0 0 10px rgba(40, 40, 40, 0.035);
+ border-radius: clamp(8px, 1.6667vw, 12px) 0 0 clamp(8px, 1.6667vw, 12px);
+ position: absolute;
+ overflow: hidden;
+ top: 8.3333%;
+ right: -1.6667%;
+ width: 68.5%;
+ height: clamp(160px, 30.8333vw, 234px);
+ box-sizing: border-box}
+.molecules-stats .cs-tab-placeholder {position: relative;
+ z-index: 1;
+ height: 100%;
+ margin: 0;
+ padding-right: 12px;
+ padding-bottom: 4px;
+ box-sizing: border-box;
+ overflow-y: scroll;
+ color: var(--invertlight);
+ font: clamp(12px, 1.5vw, 15px) var(--text);
+ line-height: 1.6;
+ text-align: justify;
+ scrollbar-width: thin;
+ scrollbar-color: var(--orangedark) transparent}
+.molecules-stats .cs-tab-placeholder::-webkit-scrollbar {width: 6px}
+.molecules-stats .cs-tab-placeholder::-webkit-scrollbar-track {background: transparent}
+.molecules-stats .cs-tab-placeholder::-webkit-scrollbar-thumb {background-color: var(--orangedark);
+ border-radius: 10px}
+.molecules-stats .cs-tab-placeholder::-webkit-scrollbar-button {display: none !important;
+ height: 0 !important;
+ width: 0 !important}
+.molecules-stat {position: relative;
+ z-index: 1;
+ font: 800 italic clamp(9px, 1.4167vw, 10px) var(--title);
+ text-transform: uppercase;
+ color: var(--orangedark);
+ line-height: 1.1;
+ display: flex;
+ gap: clamp(4px, 0.8333vw, 6px);
+ margin-left: 1.6667%}
+.molecules-stat b {display: block;
+ margin: -2px;
+ border: solid 2px var(--invertlight);
+ height: clamp(9px, 1.25vw, 9px);
+ width: clamp(9px, 1.25vw, 9px);
+ border-radius: clamp(2px, 0.4167vw, 3px);
+ transform: skewx(-10deg);
+ background-color: var(--invertdark)}
+.molecules-stat span {display: block;
+ margin-left: 6px;
+ background: linear-gradient(to right, var(--orangedark), var(--pinklight) 175%);
+ background-clip: text;
+ -webkit-background-clip: text;
+ color: transparent}
+.molecules-stat.one b:nth-child(1),
+.molecules-stat.two b:nth-child(1),
+.molecules-stat.three b:nth-child(1),
+.molecules-stat.four b:nth-child(1),
+.molecules-stat.five b:nth-child(1),
+.molecules-stat.six b:nth-child(1) {background: linear-gradient(to right, var(--pinklight), var(--orangedark));
+ background-size: clamp(50px, 11.6667vw, 88px);
+ opacity: 1}
+.molecules-stat.two b:nth-child(2),
+.molecules-stat.three b:nth-child(2),
+.molecules-stat.four b:nth-child(2),
+.molecules-stat.five b:nth-child(2),
+.molecules-stat.six b:nth-child(2) {background: linear-gradient(to right, var(--pinklight), var(--orangedark));
+ background-size: clamp(50px, 11.6667vw, 88px);
+ opacity: 1;
+ background-position: top left clamp(-15px, -2.0833vw, -9px)}
+.molecules-stat.three b:nth-child(3),
+.molecules-stat.four b:nth-child(3),
+.molecules-stat.five b:nth-child(3),
+.molecules-stat.six b:nth-child(3) {background: linear-gradient(to right, var(--pinklight), var(--orangedark));
+ background-size: clamp(50px, 11.6667vw, 88px);
+ opacity: 1;
+ background-position: top left clamp(-31px, -4.1667vw, -18px)}
+.molecules-stat.four b:nth-child(4),
+.molecules-stat.five b:nth-child(4),
+.molecules-stat.six b:nth-child(4) {background: linear-gradient(to right, var(--pinklight), var(--orangedark));
+ background-size: clamp(50px, 11.6667vw, 88px);
+ opacity: 1;
+ background-position: top left clamp(-47px, -6.25vw, -27px)}
+.molecules-stat.five b:nth-child(5),
+.molecules-stat.six b:nth-child(5) {background: linear-gradient(to right, var(--pinklight), var(--orangedark));
+ background-size: clamp(50px, 11.6667vw, 88px);
+ opacity: 1;
+ background-position: top left clamp(-63px, -8.3333vw, -36px)}
+.molecules-stat.six b:nth-child(6) {background: linear-gradient(to right, var(--pinklight), var(--orangedark));
+ background-size: clamp(50px, 11.6667vw, 88px);
+ opacity: 1;
+ background-position: top left clamp(-79px, -10.4167vw, -45px)}
+
+.molecules-imgs {position: absolute;
+ left: 0;
+ top: 8.3333%;
+ display: grid;
+ grid-template-columns: 47.5410% auto;
+ gap: clamp(8px, 1.1667vw, 8px);
+ width: 31.25%;
+ box-shadow: 0 0 10px rgba(40, 40, 40, 0.035);
+ padding: clamp(14px, 2.9167vw, 22px);
+ border-radius: 0 clamp(8px, 1.6667vw, 12px) clamp(8px, 1.6667vw, 12px) 0;
+ background-color: var(--backlight);
+ overflow: hidden}
+.molecules-imgs img {display: block;
+ width: 100%;
+ height: 100% !important;
+ position: absolute;
+ top: 0; left: 0;
+ border-radius: clamp(4px, 0.8333vw, 6px);
+ object-fit: cover;
+ filter: contrast(120%);
+ mix-blend-mode: multiply}
+.molecules-imgs div {position: relative;
+ padding-top: 98.6207%}
+.molecules-imgs div:nth-child(2) {grid-column: 1 / 3;
+ padding-top: 46.8852%}
+.molecules-imgs div::before {content: "";
+ display: block;
+ height: 100%;
+ width: 100%;
+ background-color: var(--backdark);
+ position: absolute;
+ top: 0; left: 0;
+ border-radius: 10px}
+.molecules-imgs .molecules-stats-flower {position: absolute;
+ top: -35.14%;
+ right: -69.33%;
+ width: 133.33%;
+ height: 133.33%;
+ padding-top: 0}
+
+.molecules-music {position: absolute;
+ right: -5.4167%;
+ left: 0;
+ top: 41.6667%;
+ margin-top: 20px;
+ display: grid;
+ grid-template-columns: minmax(0, 0.1fr) minmax(0, 2fr) minmax(0, 1.1fr);
+ gap: clamp(16px, 4.1667vw, 31px)}
+/* playlist and video swap visual sides via explicit grid placement,
+ rather than reordering the html. grid-row is pinned explicitly too —
+ the hidden radio inputs sit earlier in the dom with no placement of
+ their own, and leaving row assignment implicit let them decouple
+ the panel from the buttons' row instead of both landing in row 1. */
+.molecules-playlist {grid-column: 3;
+ grid-row: 1}
+.molecules-video {grid-column: 2;
+ grid-row: 1}
+.molecules-music::after {content: "";
+ display: block;
+ background: linear-gradient(to bottom, var(--orangedark), var(--pinklight) 125%);
+ transform: skewx(7deg);
+ margin: 0 clamp(-24px, -1.6667vw, -12px) 0 clamp(-40px, -4.1667vw, -31px);
+ border-radius: 0 clamp(8px, 1.6667vw, 12px) clamp(8px, 1.6667vw, 12px) 0;
+ border: solid clamp(6px, 1.25vw, 9px) var(--backlight);
+ box-shadow: 0 0 10px rgba(40, 40, 40, 0.035);
+ position: relative;
+ z-index: 1;
+ grid-column: 1;
+ grid-row: 1}
+.molecules-playlist {display: flex;
+ flex-direction: column;
+ gap: clamp(4px, 0.8333vw, 6px)}
+/* radios are visually hidden but stay keyboard-focusable/tabbable —
+ real display:none would remove them from tab order entirely */
+.cs-tab-radio {position: absolute;
+ opacity: 0;
+ width: 1px;
+ height: 1px;
+ overflow: hidden;
+ clip: rect(0, 0, 0, 0);
+ white-space: nowrap}
+.molecules-songs {display: flex;
+ align-items: center;
+ min-height: clamp(38px, 6vw, 52px);
+ background-color: var(--invertlight);
+ border-radius: clamp(8px, 1.6667vw, 12px) 0 0 clamp(8px, 1.6667vw, 12px);
+ transform: skewx(7deg);
+ padding: clamp(10px, 1.6667vw, 12px) clamp(24px, 8.3333vw, 63px) clamp(10px, 1.6667vw, 12px) clamp(12px, 2.0833vw, 15px);
+ text-align: left;
+ color: var(--backdark);
+ cursor: pointer;
+ box-shadow: 0 0 10px rgba(40, 40, 40, 0.035);
+ transition: 0.3s}
+/* active tab styling, driven by:checked instead of a static class —
+ this is what makes the tabs actually switch content with no js */
+#cs-tab-1:checked ~ .molecules-playlist label:nth-child(1),
+#cs-tab-2:checked ~ .molecules-playlist label:nth-child(2) {background: linear-gradient(225deg, var(--orangedark), var(--pinklight) 125%);
+ position: relative;
+ z-index: 1;
+ color: var(--invertlight)}
+.molecules-songs:nth-child(1) {margin-left: -4%}
+#cs-tab-1:checked ~ .molecules-playlist label:nth-child(1) {margin-left: -10%}
+.molecules-songs:nth-child(2) {margin-left: -3%}
+#cs-tab-2:checked ~ .molecules-playlist label:nth-child(2) {margin-left: -9%}
+@media(hover: hover) {.molecules-songs:hover {filter: brightness(1.2);
+ transform: skewx(7deg) translatey(-2px);
+ box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2)}}
+.molecules-songs h1 {margin: 0;
+ font: 800 italic clamp(13px, 2.5vw, 19px) var(--serif);
+ line-height: 1.1;
+ overflow-wrap: break-word;
+ text-transform: lowercase}
+.molecules-video {padding: clamp(14px, 2.9167vw, 22px);
+ border-radius: clamp(8px, 1.6667vw, 12px);
+ background-color: var(--backlight);
+ box-shadow: 0 0 10px rgba(40, 40, 40, 0.035);
+ transform: skewx(7deg)}
+.cs-tab-panels {position: relative;
+ height: clamp(200px, 32vw, 260px);
+ box-sizing: border-box;
+ overflow-y: auto;
+ scrollbar-width: thin;
+ scrollbar-color: var(--orangedark) transparent;
+ /* counter-skew: the outer card(.molecules-video) is skewed for the
+ slanted aesthetic, this cancels that skew back out so the text
+ itself reads upright instead of leaning */
+ transform: skewx(-7deg)}
+.cs-tab-panels::-webkit-scrollbar {width: 6px}
+.cs-tab-panels::-webkit-scrollbar-track {background: transparent}
+.cs-tab-panels::-webkit-scrollbar-thumb {background-color: var(--orangedark);
+ border-radius: 10px}
+.cs-tab-panels::-webkit-scrollbar-button {display: none !important;
+ height: 0 !important;
+ width: 0 !important}
+.cs-tab-panel {display: none;
+ color: var(--invertlight);
+ font: clamp(12px, 1.5vw, 15px) var(--text);
+ line-height: 1.6;
+ text-align: left}
+.cs-tab-placeholder {margin: 0;
+ font-style: italic;
+ color: var(--backdark);
+ text-align: justify}
+.cs-tab-panel .cs-tab-placeholder {color: var(--invertlight);
+ font-style: normal;
+ text-align: justify}
+#cs-tab-1:checked ~ .molecules-video #cs-panel-1,
+#cs-tab-2:checked ~ .molecules-video #cs-panel-2 {display: block}
+.molecules-palette {position: absolute;
+ bottom: 2.9167%;
+ left: 2.9167%;
+ right: 2.9167%;
+ height: 9.1667%;
+ z-index: 1}
+.molecules-palette div {border: solid clamp(6px, 1.25vw, 9px) var(--backlight);
+ border-radius: clamp(6px, 1.25vw, 9px);
+ background-color: var(--orangedark);
+ height: 100%;
+ position: absolute;
+ bottom: 0;
+ width: calc(20% - clamp(6px, 1.3333vw, 10px));
+ box-shadow: 0 0 10px rgba(40, 40, 40, 0.035)}
+.molecules-palette div:nth-child(1) {left: 80%}
+.molecules-palette div:nth-child(2) {left: 60%; background-color: var(--orangelight, #3B82F6)}
+.molecules-palette div:nth-child(3) {left: 40%; background-color: var(--backdark)}
+.molecules-palette div:nth-child(4) {left: 20%; background-color: var(--pinklight)}
+.molecules-palette div:nth-child(5) {left: 0%; background-color: var(--pinkdark)}
+.molecules-palette div::before {content: "";
+ display: block;
+ position: absolute;
+ top: 0;
+ left: 0;
+ height: 100%;
+ width: 100%;
+ filter: invert(100%);
+ background-image: var(--polka);
+ mix-blend-mode: soft-light;
+ opacity: 0.5}
+.molecules-palette div span {position: relative;
+ z-index: 1;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ height: 100%;
+ width: 100%;
+ padding: 4px;
+ box-sizing: border-box;
+ color: #FFF;
+ text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+ font: 700 clamp(7px, 1vw, 10px) var(--title);
+ text-transform: none;
+ letter-spacing: 0;
+ text-align: center;
+ line-height: 1.25;
+ overflow-wrap: break-word;
+ word-break: break-word;
+ hyphens: auto}
+.molecules-palette div .cs-rank-badge {position: absolute;
+ z-index: 2;
+ bottom: 0;
+ left: 50%;
+ transform: translate(-50%, 50%);
+ width: clamp(15px, 1.5vw, 15px);
+ height: clamp(15px, 1.5vw, 15px);
+ padding: 0;
+ border-radius: 50%;
+ background-color: var(--invertlight);
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ color: var(--backlight);
+ font: 800 clamp(9px, 0.85vw, 9px) var(--title);
+ line-height: 1;
+ box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4)}
+
+/*============================================================
+ extend section — everything below the original fixed-canvas
+ design(avanzamento, competenze, and any future sections) lives
+ in normal document flow instead of the percentage-positioned
+ canvas above. new sections just get added as more .cs-panel
+ blocks inside .cs-extend-main — no coordinate math required,
+ unlike everything above this point.============================================================ */
+.cs-extend {position: relative;
+ overflow: hidden;
+ display: grid;
+ grid-template-columns: 1fr 240px;
+ gap: 22px;
+ align-items: stretch;
+ margin-top: 0;
+ background-color: var(--backdark);
+ padding: 20px}
+.cs-extend-glow {position: absolute;
+ z-index: 0;
+ width: clamp(140px, 30vw, 240px);
+ height: clamp(140px, 30vw, 240px)}
+.cs-extend-glow-1 {top: 15%;
+ right: -8%;
+ bottom: auto;
+ left: auto;
+ background: linear-gradient(to bottom left, var(--pinklight), var(--orangedark))}
+.cs-extend-glow-2 {bottom: 15%;
+ left: -8%;
+ top: auto;
+ right: auto;
+ background: linear-gradient(to top left, var(--pinklight), var(--orangedark))}
+.cs-extend-main {position: relative;
+ z-index: 1;
+ display: flex;
+ flex-direction: column;
+ gap: 22px;
+ min-width: 0}
+.cs-side-image {position: relative;
+ z-index: 0;
+ width: 150%;
+ height: 100%;
+ left: -80px;
+ min-height: 100%;
+ border-radius: 16px}
+/* No stardust overlay here, unlike other image containers — mix-blend-mode
+ compositing against a transparent png's empty pixels renders as black in
+ most browsers(a known blend-mode + transparency limitation), and this
+ image is specifically meant to keep a transparent background. */
+.cs-side-image img {position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100% !important;
+ object-fit: cover}
+
+.cs-panel {background-color: var(--backlight);
+ border-radius: 16px;
+ padding: clamp(20px, 3.5vw, 32px);
+ box-shadow: 0 0 10px rgba(40, 40, 40, 0.05)}
+.cs-panel-header {position: relative;
+ z-index: 1}
+.cs-panel-title {font: 800 clamp(28px, 4.5vw, 34px) var(--text);
+ text-transform: uppercase;
+ letter-spacing: 0;
+ background: linear-gradient(to right, var(--pinklight), var(--orangedark));
+ -webkit-background-clip: text;
+ background-clip: text;
+ color: transparent;
+ margin: 0 0 8px}
+.cs-panel-desc {font-style: italic;
+ font-size: 12px;
+ font-family: var(--text);
+ color: var(--invertdark);
+ opacity: 0.75;
+ margin: 0 0 18px;
+ line-height: 1.5}
+
+/* Avanzamento */
+.cs-stat-row {display: flex;
+ gap: 12px;
+ flex-wrap: wrap;
+ margin-bottom: 14px}
+.cs-stat-badge {flex: 1 1 110px;
+ background: linear-gradient(135deg, var(--orangedark), var(--pinkdark));
+ border-radius: 12px;
+ padding: 12px 14px;
+ text-align: center;
+ color: var(--backlight)}
+.cs-stat-value {display: block;
+ font: 800 24px var(--title)}
+.cs-stat-label {display: block;
+ font: 700 9px var(--text);
+ text-transform: uppercase;
+ letter-spacing: 1px;
+ opacity: 0.85;
+ margin-top: 2px}
+.cs-hint {font-style: italic;
+ font-size: 11px;
+ font-family: var(--text);
+ color: var(--invertdark);
+ opacity: 0.6;
+ margin: 0 0 16px;
+ line-height: 1.4}
+.cs-difficulty-row {display: flex;
+ gap: 8px;
+ flex-wrap: wrap;
+ margin-bottom: 14px}
+.cs-diff {font: 700 11px var(--text);
+ padding: 4px 11px;
+ border-radius: 20px;
+ background: var(--backdark)}
+.cs-diff-d {color: royalblue}
+.cs-diff-c {color: #FF3333}
+.cs-diff-b {color: #339900}
+.cs-diff-a {color: #B31CFF}
+.cs-diff-s {color: #B8860B}
+
+.cs-quest-log {position: relative;
+ background-color: var(--invertlight);
+ background-image: url(https://i.ibb.co/DtvtrbQ/stardust-2-XDark.png);
+ background-blend-mode: lighten;
+ border-radius: 12px;
+ padding: 6px 18px;
+ max-height: 180px;
+ overflow-y: scroll;
+ scrollbar-width: thin;
+ scrollbar-color: var(--orangedark) transparent}
+.cs-quest-log::-webkit-scrollbar {width: 6px}
+.cs-quest-log::-webkit-scrollbar-track {background: transparent}
+.cs-quest-log::-webkit-scrollbar-thumb {background-color: var(--orangedark);
+ border-radius: 10px}
+.cs-quest-log::-webkit-scrollbar-button {display: none !important;
+ height: 0 !important;
+ width: 0 !important}
+.cs-quest-log ul {margin: 0;
+ padding: 0;
+ list-style: none}
+.cs-quest-log li {font-size: 12px;
+ font-family: var(--text);
+ color: var(--backlight);
+ padding: 10px 0;
+ border-bottom: 1px dotted var(--orangelight, #3B82F6)}
+.cs-quest-log li:last-child {border-bottom: none}
+.cs-quest-log li a {color: var(--orangelight, #3B82F6);
+ text-decoration: none;
+ font-weight: 700}
+.cs-quest-exp {color: var(--orangelight, #3B82F6);
+ font-weight: 700}
+
+/* Competenze */
+.cs-skill-chips {display: flex;
+ gap: 10px;
+ flex-wrap: wrap}
+.cs-skill-chip {position: relative;
+ display: flex;
+ align-items: center;
+ gap: 10px;
+ background-color: var(--invertlight);
+ background-image: url(https://i.ibb.co/DtvtrbQ/stardust-2-XDark.png);
+ background-blend-mode: lighten;
+ border-radius: 30px;
+ padding: 9px 18px;
+ box-shadow: 0 0 10px rgba(40, 40, 40, 0.1)}
+.cs-skill-name {font: 800 italic 14px var(--serif);
+ color: var(--backlight)}
+.cs-skill-dots {display: flex;
+ gap: 6px}
+.cs-skill-dots b {display: block;
+ height: 11px;
+ width: 11px;
+ border: solid 2px var(--backlight);
+ border-radius: 3px;
+ transform: skewx(-10deg);
+ background-color: var(--backdark)}
+.cs-skill-dots b.filled {background: linear-gradient(135deg, var(--orangedark), var(--pinklight))}
+
+/*============================================================
+ parametri e risorse — full-width stat diamond. no <table>: each
+ stat is a grid item placed by explicit grid-column/grid-row, so
+ the required layout order(mst top, res/DIF middle-upper,
+ dst/FRZ middle-lower, VEL bottom) is guaranteed regardless of
+ screen size, and every piece is independently stylable.============================================================ */
+.cs-stats-section {position: relative;
+ overflow: hidden;
+ background-color: var(--backdark);
+ padding: 20px}
+.cs-stat-diamond {position: relative;
+ z-index: 1;
+ display: grid;
+ grid-template-columns: repeat(3, 1fr);
+ grid-template-rows: repeat(4, 1fr);
+ gap: 10px;
+ max-width: 276px;
+ margin: 24px auto 22px}
+.cs-stat-node {position: relative;
+ background-color: #94A3B8;
+ background-image: var(--polka);
+ background-blend-mode: soft-light;
+ border-radius: 7px;
+ padding: 6px 4px;
+ text-align: center;
+ box-shadow: 0 0 8px rgba(40, 40, 40, 0.15)}
+.cs-stat-node-label {display: block;
+ font: 800 12px var(--title);
+ letter-spacing: 0;
+ color: var(--invertlight)}
+.cs-stat-node-total {display: block;
+ font: 900 19px var(--title);
+ line-height: 1.1;
+ color: var(--invertlight)}
+.cs-stat-node-points {display: block;
+ font-size: 9px;
+ font-family: var(--text);
+ color: var(--invertdark);
+ opacity: 0.65}
+
+.cs-stat-mst {grid-column: 2; grid-row: 1}
+.cs-stat-res {grid-column: 1; grid-row: 2}
+.cs-stat-dif {grid-column: 3; grid-row: 2}
+.cs-stat-dst {grid-column: 1; grid-row: 3}
+.cs-stat-frz {grid-column: 3; grid-row: 3}
+.cs-stat-vel {grid-column: 2; grid-row: 4}
+
+.cs-stat-mst,
+.cs-stat-res,
+.cs-stat-dif,
+.cs-stat-frz {background-color: var(--backlight);
+ background-image: none}
+
+/* DST and VEL: the character's two primary stats, called out visually */
+.cs-stat-highlight {background-color: transparent;
+ background-image: linear-gradient(135deg, var(--orangedark), var(--pinklight)), var(--polka);
+ background-blend-mode: normal, soft-light;
+ box-shadow: 0 0 12px rgba(29, 78, 216, 0.45)}
+.cs-stat-highlight .cs-stat-node-label,
+.cs-stat-highlight .cs-stat-node-total {color: #FFF;
+ text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4)}
+.cs-stat-highlight .cs-stat-node-points {color: #FFF;
+ opacity: 0.85}
+
+.cs-resource-row {position: relative;
+ z-index: 1;
+ max-width: 420px;
+ margin: 0 auto}
+.cs-resource-badge .cs-stat-label {letter-spacing: 1px}
+
+/*============================================================
+ discipline — a 5-way image switcher(disciplina base, three
+ discipline avanzate, slot evocazione). same radio+label css
+ trick used for the character-info tabs earlier: clicking a
+ button checks its radio, and the matching image shows via the:checked sibling selector — no js anywhere.============================================================ */
+.cs-discipline-section {position: relative;
+ overflow: hidden;
+ background-color: var(--backdark);
+ padding: 20px}
+.cs-disc-glow-center {position: absolute;
+ z-index: 0;
+ top: 7%;
+ left: 50%;
+ right: auto;
+ transform: translatex(-50%);
+ width: 380px;
+ height: 380px}
+.cs-disc-flower {position: absolute;
+ z-index: 0;
+ top: 15%;
+ width: 350px;
+ height: 350px;
+ -webkit-mask-image: var(--flower);
+ -webkit-mask-repeat: no-repeat;
+ -webkit-mask-size: contain;
+ -webkit-mask-position: center;
+ background-color: var(--invertlight);
+ opacity: 1;
+ pointer-events: none}
+.cs-disc-flower-left {left: -5%}
+.cs-disc-flower-right {right: -5%;
+ transform: scalex(-1)}
+.cs-disc-image-wrap {position: relative;
+ z-index: 1;
+ width: 100%;
+ max-width: 350px;
+ margin: 22px auto 20px;
+ border-radius: 16px;
+ overflow: hidden}
+.cs-disc-image-wrap::before {content: "";
+ display: block;
+ padding-top: 100%}
+.cs-disc-image {opacity: 0;
+ visibility: hidden;
+ pointer-events: none;
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100% !important;
+ background-size: contain;
+ background-position: center;
+ background-repeat: no-repeat}
+#cs-disc-1:checked ~ .cs-disc-image-wrap #cs-disc-img-1,
+#cs-disc-2:checked ~ .cs-disc-image-wrap #cs-disc-img-2,
+#cs-disc-3:checked ~ .cs-disc-image-wrap #cs-disc-img-3,
+#cs-disc-4:checked ~ .cs-disc-image-wrap #cs-disc-img-4,
+#cs-disc-5:checked ~ .cs-disc-image-wrap #cs-disc-img-5 {opacity: 1;
+ visibility: visible;
+ pointer-events: auto}
+
+.cs-disc-tabs {position: relative;
+ z-index: 1;
+ display: flex;
+ flex-wrap: nowrap;
+ gap: 6px}
+.cs-disc-tab-btn {display: flex;
+ align-items: center;
+ justify-content: center;
+ flex: 1 1 0;
+ min-width: 0;
+ min-height: 52px;
+ background-color: var(--invertlight);
+ background-image: url(https://i.ibb.co/DtvtrbQ/stardust-2-XDark.png);
+ background-blend-mode: lighten;
+ color: var(--backdark);
+ font: 800 italic 13px var(--serif);
+ line-height: 1.25;
+ text-align: center;
+ white-space: normal;
+ transform: skewx(7deg);
+ padding: 8px 6px;
+ border-radius: 12px;
+ cursor: pointer;
+ box-shadow: 0 0 10px rgba(40, 40, 40, 0.1);
+ transition: 0.3s}
+#cs-disc-1:checked ~ .cs-disc-tabs label[for="cs-disc-1"],
+#cs-disc-2:checked ~ .cs-disc-tabs label[for="cs-disc-2"],
+#cs-disc-3:checked ~ .cs-disc-tabs label[for="cs-disc-3"],
+#cs-disc-4:checked ~ .cs-disc-tabs label[for="cs-disc-4"],
+#cs-disc-5:checked ~ .cs-disc-tabs label[for="cs-disc-5"] {background-image: linear-gradient(135deg, var(--orangedark), var(--pinklight)), url(https://i.ibb.co/DtvtrbQ/stardust-2-XDark.png);
+ background-blend-mode: normal, lighten;
+ color: #FFF}
+@media(hover: hover) {.cs-disc-tab-btn:hover {filter: brightness(1.2);
+ transform: skewx(7deg) translatey(-2px);
+ box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25)}}
+
+.cs-disc-panels {position: relative;
+ z-index: 1;
+ background-color: var(--invertlight);
+ background-image: url(https://i.ibb.co/DtvtrbQ/stardust-2-XDark.png);
+ background-blend-mode: lighten;
+ border-radius: 12px;
+ padding: 16px 18px;
+ margin-top: 16px;
+ height: 420px;
+ box-sizing: border-box;
+ overflow-y: scroll;
+ scrollbar-width: thin;
+ scrollbar-color: var(--orangedark) transparent}
+.cs-disc-panels::-webkit-scrollbar {width: 6px}
+.cs-disc-panels::-webkit-scrollbar-track {background: transparent}
+.cs-disc-panels::-webkit-scrollbar-thumb {background-color: var(--orangedark);
+ border-radius: 10px}
+.cs-disc-panels::-webkit-scrollbar-button {display: none !important;
+ height: 0 !important;
+ width: 0 !important}
+.cs-disc-panel {display: none}
+.cs-disc-panel .cs-tab-placeholder {color: var(--backlight);
+ opacity: 0.85}
+#cs-disc-1:checked ~ .cs-disc-panels #cs-disc-panel-1,
+#cs-disc-2:checked ~ .cs-disc-panels #cs-disc-panel-2,
+#cs-disc-3:checked ~ .cs-disc-panels #cs-disc-panel-3,
+#cs-disc-4:checked ~ .cs-disc-panels #cs-disc-panel-4,
+#cs-disc-5:checked ~ .cs-disc-panels #cs-disc-panel-5 {display: block}
+
+/*============================================================
+ technique documentation — structured rules-text content inside
+ a discipline panel: section labels(competenze/Meccanica/
+ tecniche), status-effect callout boxes, and technique cards
+ with cost/traits/flavor/effects. Colors are neutral/dark so the
+ specific status-tag color(#a0a9bf, matching the game system's
+ own convention) reads clearly against them.============================================================ */
+.cs-tech-doc {text-align: justify;
+ font-family: var(--text);
+ color: var(--backlight);
+ font-size: 13px}
+.cs-tech-doc > p {margin: 0 0 10px;
+ line-height: 1.6;
+ color: var(--backlight);
+ font-size: 13px}
+.cs-tech-doc p:last-child {margin-bottom: 0}
+.cs-tech-meta-label {font-weight: 800;
+ color: var(--orangelight, #3B82F6);
+ text-transform: uppercase;
+ font-size: 11px;
+ letter-spacing: 0}
+.cs-tech-comp-list {margin: 2px 0 14px;
+ padding-left: 20px}
+.cs-tech-comp-list li {line-height: 1.6;
+ color: var(--backlight)}
+.cs-tech-flavor {font-style: italic;
+ opacity: 0.8}
+.cs-status-tag {color: var(--pinklight, #4A90E2);
+ font-weight: 700}
+.cs-status-block {background-color: rgba(74, 144, 226, 0.12);
+ border-left: 3px solid var(--pinklight, #4A90E2);
+ border-radius: 4px;
+ padding: 10px 14px;
+ margin: 0 0 14px;
+ font-size: 13px}
+.cs-status-block:last-child {margin-bottom: 0}
+.cs-status-title {color: var(--pinklight, #4A90E2);
+ font-weight: 800;
+ font-size: 13px;
+ margin: 0 0 6px !important}
+.cs-status-block ul {margin: 0;
+ padding-left: 18px}
+.cs-status-block li {line-height: 1.6;
+ margin-bottom: 4px}
+.cs-status-block li:last-child {margin-bottom: 0}
+.cs-tech-card {background-color: var(--invertdark);
+ background-image: url(https://i.ibb.co/DtvtrbQ/stardust-2-XDark.png);
+ background-blend-mode: lighten;
+ border-radius: 10px;
+ padding: 14px 16px;
+ margin: 0 0 14px;
+ font-size: 12px}
+.cs-tech-card:last-child {margin-bottom: 0}
+.cs-tech-card-title {font-weight: 800;
+ font-size: 13px;
+ color: var(--backlight);
+ margin: 0 0 4px !important}
+.cs-tech-name {color: var(--backlight)}
+.cs-tech-param {color: var(--orangelight, #3B82F6);
+ font-weight: 800;
+ background-color: rgba(59, 130, 246, 0.15);
+ border-radius: 4px;
+ padding: 1px 5px;
+ white-space: nowrap}
+.cs-tech-card-traits {margin: 0 0 8px !important;
+ font-size: 12px;
+ color: var(--backlight);
+ opacity: 0.85}
+.cs-tech-card-flavor {font-style: italic;
+ font-size: 12px;
+ margin: 0 0 10px !important;
+ color: var(--backlight);
+ opacity: 0.75}
+.cs-tech-card-effects-label {margin: 0 0 4px !important;
+ font-size: 12px;
+ color: var(--backlight)}
+.cs-tech-card ul {margin: 0;
+ padding-left: 18px}
+.cs-tech-card li {color: var(--backlight);
+ opacity: 0.9;
+ line-height: 1.6;
+ margin-bottom: 4px}
+.cs-tech-card li:last-child {margin-bottom: 0}
+
+/*============================================================
+ tecniche personali — an open-ended grid of technique cards, not
+ grouped like the discipline tabs above(so no radio/tab switcher
+ needed here). add or remove .cs-technique-card blocks in the html
+ freely; the grid reflows on its own regardless of count.============================================================ */
+.cs-technique-section {position: relative;
+ overflow: hidden;
+ background-color: var(--backdark);
+ padding: 20px}
+.cs-technique-list {position: relative;
+ z-index: 1;
+ display: grid;
+ grid-template-columns: 1fr;
+ gap: 14px;
+ margin-top: 20px}
+.cs-technique-card {background-color: var(--invertlight);
+ background-image: url(https://i.ibb.co/DtvtrbQ/stardust-2-XDark.png);
+ background-blend-mode: lighten;
+ border-radius: 12px;
+ padding: 16px 18px;
+ box-shadow: 0 0 10px rgba(40, 40, 40, 0.1)}
+.cs-technique-name {margin: 0 0 6px;
+ font: 800 italic 16px var(--serif);
+ color: var(--backlight)}
+.cs-technique-desc {margin: 0;
+ font-size: 12px;
+ font-family: var(--text);
+ line-height: 1.5;
+ color: var(--backlight);
+ opacity: 0.8}
+
+/*============================================================
+ armi e oggetti — the original was an inconsistent bbcode table(header colspan=4 but rows of 3 cells, mismatched from the
+ colspan=2 special-slot row). rebuilt as an explicit slot grid:
+ each .cs-slot-row is its own small grid, so the two special
+ slots(vita/Schiena) can use a genuinely different column count
+ from the numbered pouch slots and weapon slots around them,
+ instead of forcing everything into one uniform table structure.============================================================ */
+.cs-equipment-section {position: relative;
+ overflow: hidden;
+ background-color: var(--backdark);
+ padding: 20px}
+.cs-bag-image {position: relative;
+ z-index: 1;
+ width: 100%;
+ max-width: 460px;
+ margin: 22px auto 20px;
+ border-radius: 16px;
+ overflow: hidden}
+.cs-bag-image::before {content: "";
+ display: block;
+ padding-top: 80%}
+.cs-bag-image img {position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100% !important;
+ object-fit: contain}
+
+.cs-equipment-grid {position: relative;
+ z-index: 2;
+ margin-top: -300px;
+ border-radius: 16px;
+ padding: 20px}
+.cs-equipment-heading {display: table;
+ margin: 0 auto 14px;
+ text-align: center;
+ font: 800 15px var(--title);
+ text-transform: uppercase;
+ letter-spacing: 1px;
+ color: var(--backlight);
+ text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+ background-color: rgba(15, 23, 42, 0.45);
+ backdrop-filter: blur(2px);
+ -webkit-backdrop-filter: blur(2px);
+ padding: 6px 16px;
+ border-radius: 20px}
+.cs-slot-row {display: grid;
+ grid-template-columns: repeat(3, 1fr);
+ gap: 8px;
+ margin-bottom: 8px}
+.cs-slot-row:last-child {margin-bottom: 0}
+.cs-slot-heading-row {grid-template-columns: 2fr 1fr;
+ gap: 8px;
+ margin-bottom: 6px}
+.cs-slot-subheading {text-align: center;
+ font: 800 11px var(--title);
+ text-transform: uppercase;
+ letter-spacing: 1px;
+ color: var(--backlight);
+ text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+ background-color: rgba(15, 23, 42, 0.45);
+ backdrop-filter: blur(2px);
+ -webkit-backdrop-filter: blur(2px);
+ padding: 6px 4px;
+ border-radius: 6px}
+.cs-slot {background-color: rgba(15, 23, 42, 0.45);
+ backdrop-filter: blur(2px);
+ -webkit-backdrop-filter: blur(2px);
+ border: 1px dashed var(--orangelight, #3B82F6);
+ border-radius: 8px;
+ padding: 8px 6px;
+ text-align: center}
+.cs-slot-small {max-width: 90px;
+ padding: 6px 4px}
+.cs-cartuccia-group {grid-column: span 2;
+ display: flex;
+ justify-content: center;
+ gap: 8px}
+.cs-slot-small .cs-slot-label {font-size: 8px}
+.cs-slot-small .cs-slot-status {font-size: 10px}
+.cs-slot-label {display: block;
+ font: 700 10px var(--text);
+ text-transform: uppercase;
+ letter-spacing: 0;
+ color: var(--backlight);
+ text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7)}
+.cs-slot-status {display: block;
+ margin-top: 2px;
+ font: 800 italic 12px var(--serif);
+ color: var(--backlight);
+ text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7)}
+
+.cs-equipment-log {position: relative;
+ z-index: 1;
+ background-color: var(--invertlight);
+ background-image: url(https://i.ibb.co/DtvtrbQ/stardust-2-XDark.png);
+ background-blend-mode: lighten;
+ border-radius: 12px;
+ padding: 6px 18px;
+ margin-top: 16px;
+ height: 200px;
+ box-sizing: border-box;
+ overflow-y: scroll;
+ scrollbar-width: thin;
+ scrollbar-color: var(--orangedark) transparent}
+.cs-equipment-log::-webkit-scrollbar {width: 6px}
+.cs-equipment-log::-webkit-scrollbar-track {background: transparent}
+.cs-equipment-log::-webkit-scrollbar-thumb {background-color: var(--orangedark);
+ border-radius: 10px}
+.cs-equipment-log::-webkit-scrollbar-button {display: none !important;
+ height: 0 !important;
+ width: 0 !important}
+.cs-equipment-log ul {margin: 0;
+ padding: 0;
+ list-style: none}
+.cs-equipment-log li {font-size: 12px;
+ font-family: var(--text);
+ color: var(--backlight);
+ opacity: 0.9;
+ padding: 10px 0;
+ border-bottom: 1px dotted var(--orangelight, #3B82F6);
+ line-height: 1.5}
+.cs-equipment-log li:last-child {border-bottom: none}
+.cs-equipment-log li b {color: var(--orangelight, #3B82F6)}
+
+/*============================================================
+ mobile stack — everything below here only applies at 600px
+ and under. instead of shrinking the desktop composition down
+ to unreadable size, the whole thing switches to a simple
+ vertical list: full-width blocks, normal readable text, one
+ piece at a time.
+
+ the original design has two color zones — a vivid orange/pink
+ banner(title, character art, info panel, quote) sitting above
+ a soft light "mid" section(stats, gallery, playlist, palette).
+ that's preserved here as two real stacked sections, each still
+ using `order` internally to sequence its own pieces the way you
+ asked(title -> character -> info -> quote, then stats heading
+ -> stats -> gallery -> playlist/video -> palette) — rather than
+ flattening everything into one list and losing that two-tone
+ structure.
+
+ a few purely decorative desktop-only layers(the glow pulse,
+ the flower/circle masks behind the character art, the giant
+ off-canvas white circle behind the info panel) are hidden here
+ rather than adapted — they were tuned for the dense overlapping
+ desktop composition and don't add anything at mobile scale
+ except clutter and lost contrast. */
+@media(max-width: 600px) {.cs-aspect {height: auto;
+ padding-top: 0;
+ overflow: visible;
+ box-shadow: none}
+ .cs-canvas {position: static;
+ height: auto}
+ .molecules-mid {display: none}
+ .molecules {height: auto;
+ overflow: visible;
+ mix-blend-mode: normal;
+ display: block;
+ background: none}
+
+ /* Banner group: its own vivid backdrop, matching the desktop banner */
+ .molecules-banner {height: auto;
+ display: flex;
+ flex-direction: column;
+ gap: 18px;
+ padding: 22px 14px 30px;
+ background-color: var(--backdark);
+ background-image: none;
+ background-blend-mode: soft-light}
+
+ /* Mid group: soft light backdrop, matching the desktop mid section */
+ .molecules-mid-1 {display: flex;
+ flex-direction: column;
+ gap: 18px;
+ padding: 24px 14px 30px;
+ margin-top: 0; /* cancel the desktop-only overlap trick */
+ height: auto;
+ background-color: var(--backdark)}
+
+ /* hide the desktop-only decorative overlay layers */
+ .molecules-pulse,
+ .molecules-banner-flower,
+ .molecules-banner-circle,
+ .molecules-circ-2 {display: none}
+
+ /* 1. title */
+ .molecules-title {order: 1;
+ position: static;
+ display: block;
+ text-align: center;
+ font-size: clamp(36px, 16vw, 64px);
+ line-height: 0.9;
+ white-space: normal}
+ .molecules-title div {display: inline-block;
+ text-align: center;
+ font-size: 13px;
+ white-space: normal;
+ margin: 10px auto 0;
+ padding: 10px 16px 13px;
+ border-radius: 8px}
+ .molecules-title div::before {font-size: 22px;
+ top: 65%;
+ letter-spacing: 6px;
+ white-space: nowrap}
+
+ /* 2. character art — a plain rounded card, no mask/circle/glow layers */
+ .molecules-render {order: 2;
+ position: relative;
+ width: 100%;
+ right: 0;
+ padding-top: 80%;
+ z-index: 0;
+ margin-bottom: -25px;
+ border-radius: 16px;
+ overflow: hidden}
+ .molecules-render div {position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ background-size: cover;
+ background-position: top center}
+
+ /* 3. info panel — plain readable card instead of the giant circle */
+ .molecules-banner-right {order: 3;
+ position: static;
+ z-index: 1;
+ width: 100%;
+ height: auto;
+ border-radius: 16px;
+ padding: 20px 24px;
+ box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25)}
+ .molecules-banner-right-1 {position: static;
+ width: 100%;
+ text-align: left;
+ font-size: 14px;
+ line-height: 1.5}
+ .molecules-banner-right-1 div {padding-bottom: 14px;
+ margin-bottom: 14px}
+ .molecules-banner-right-1 b {font-size: 13px}
+
+ /* 4. quote */
+ .molecules-quote {order: 4;
+ position: relative;
+ width: 100%;
+ font-size: 16px;
+ line-height: 1.5;
+ padding: 22px 22px 28px;
+ border-radius: 16px 16px 16px 0;
+ left: 0}
+
+ /* 5. stats heading */
+ .molecules-stats-title {order: 1;
+ position: static;
+ height: auto;
+ overflow: visible;
+ text-align: center;
+ color: var(--invertlight);
+ font-size: clamp(32px, 11vw, 44px);
+ margin-top: 6px}
+ .molecules-stats-title div {margin-right: 0;
+ margin-top: -15%}
+ .molecules-stats-flower {display: none}
+
+ /* 6. background story text */
+ .molecules-stats {order: 2;
+ position: static;
+ width: 100%;
+ height: auto;
+ border-radius: 16px;
+ padding: 22px;
+ overflow: visible}
+ .molecules-stats .cs-tab-placeholder {height: auto;
+ overflow-y: visible;
+ padding-right: 0;
+ font-size: 14px;
+ text-align: justify}
+
+ /* 7. gallery */
+ .molecules-imgs {order: 3;
+ position: static;
+ width: 100%;
+ border-radius: 16px;
+ padding: 16px}
+ .molecules-imgs .molecules-stats-flower {display: none}
+
+ /* 8. music: now a tab switcher — buttons wrap in a row above the
+ content panel, since the skewed side-by-side desktop layout
+ doesn't work at this width */
+ .molecules-music {order: 4;
+ position: static;
+ width: 100%;
+ display: flex;
+ flex-direction: column;
+ gap: 14px}
+ .molecules-music::after {display: none}
+ .molecules-playlist {flex-direction: row;
+ flex-wrap: wrap;
+ gap: 8px}
+ .molecules-songs {flex: 0 0 auto;
+ transform: none;
+ border-radius: 20px;
+ padding: 8px 16px;
+ margin-left: 0 !important;
+ text-align: center}
+ .molecules-songs h1 {font-size: 15px}
+ .molecules-video {transform: none;
+ border-radius: 12px}
+ .cs-tab-panels {transform: none;
+ height: 45vh}
+ .cs-tab-panel {font-size: 14px}
+
+ /* 9. palette */
+ .molecules-palette {order: 5;
+ position: relative;
+ width: 100%;
+ height: auto;
+ display: grid;
+ grid-template-columns: repeat(2, 1fr);
+ gap: 8px}
+ .molecules-palette div {position: relative;
+ width: 100%;
+ height: auto;
+ min-height: 64px;
+ left: auto;
+ bottom: auto}
+ .molecules-palette div:nth-child(1),
+ .molecules-palette div:nth-child(2),
+ .molecules-palette div:nth-child(3),
+ .molecules-palette div:nth-child(4),
+ .molecules-palette div:nth-child(5) {left: auto;
+ bottom: auto}
+ .molecules-palette div:nth-child(5) {left: 50%}
+ .molecules-palette div span {font-size: 11px}
+
+ /* extend section: single column, side image leads */
+ .cs-extend {grid-template-columns: 1fr;
+ padding-top: 0}
+ .cs-side-image {order: -1;
+ height: auto;
+ min-height: 0;
+ padding-top: 65%;
+ left: -20%}
+ .cs-side-image img {position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: auto}
+ .cs-panel {padding: 20px}
+ .cs-stat-value {font-size: 20px}
+
+ /* parametri e risorse: smaller nodes fit comfortably on a phone */
+ .cs-stats-section {padding: 20px}
+ .cs-stat-diamond {max-width: 300px;
+ gap: 9px}
+ .cs-stat-node-label {font-size: 12px}
+ .cs-stat-node-points {font-size: 8px}
+ .cs-stat-node-total {font-size: 18px}
+
+ /* discipline: smaller image and tighter button row on phones */
+ .cs-discipline-section {padding: 20px}
+ .cs-disc-image-wrap {max-width: 280px;
+ margin: 18px auto 16px}
+ .cs-disc-tabs {display: grid;
+ grid-template-columns: repeat(3, 1fr);
+ gap: 10px}
+ .cs-disc-tab-btn {font-family: var(--text);
+ font-style: normal;
+ font-size: 14px;
+ letter-spacing: 0;
+ min-height: 56px;
+ padding: 8px 6px}
+ .cs-disc-panels {height: 320px}
+
+ /* tecniche personali: single column on phones */
+ .cs-technique-section {padding: 20px}
+ .cs-technique-list {grid-template-columns: 1fr}
+
+ /* armi e oggetti: smaller bag image and tighter slot grid */
+ .cs-equipment-section {padding: 20px}
+ .cs-bag-image {max-width: 460px !important}
+ .cs-equipment-grid {padding: 0;
+ margin-top: -200px}
+ .cs-slot-label {font-size: 9px}
+ .cs-slot-status {font-size: 11px}
+ .cs-equipment-log {height: 170px}
+
+ /* discipline flowers hidden on mobile */
+ .cs-disc-flower-left,
+ .cs-disc-flower-right {display: none}}
